@@ -13,10 +13,23 @@ public class _05_LongChipCompetition {
 	 * initialize The Beatles before you start your search. *
 	 **/
 	private ArrayList<Beatle> theBeatles = new ArrayList<Beatle>();
-
+	
 	public static void main(String[] args) {
 		_05_LongChipCompetition lcc = new _05_LongChipCompetition();
-		
+		lcc.findLongestChip();
+	}
+	
+	public void findLongestChip() {
+		double longestChip = 0;
+		for (int i = 0; i < theBeatles.size(); i++) {
+			ArrayList<Chip> chips = theBeatles.get(i).getChips();
+			for (int j = 0; j < chips.size(); j++) {
+				if (chips.get(j).getLength() > longestChip) {
+					longestChip = chips.get(j).getLength();
+				}
+			}
+		}
+    	System.out.println(longestChip);
 	}
 	
 	private void initializeBeatles() {
