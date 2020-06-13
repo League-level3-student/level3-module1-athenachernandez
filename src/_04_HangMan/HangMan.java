@@ -16,7 +16,7 @@ public class HangMan implements KeyListener {
 	Stack<String> stack = new Stack<String>();
 	String hiddenWord = "";
 	String currentWord;
-	int lives = 10;
+	int lives = 5;
 	char[] currentWordArray;
 	char[] hiddenWordArray;
 
@@ -33,8 +33,6 @@ public class HangMan implements KeyListener {
 		int userInt = Integer.parseInt(userInput);
 		getRandomWords(userInt);
 		displayWordLine();
-		checkRoundOver();
-		System.out.println(currentWord);
 
 	}
 
@@ -50,8 +48,12 @@ public class HangMan implements KeyListener {
 	}
 
 	public void displayWordLine() {
-		currentWord = stack.pop();
-
+		if (!stack.isEmpty()) {
+			currentWord = stack.pop();
+		}
+		System.out.println(currentWord);
+		hiddenWord = "";
+		label.setText("");
 		for (int i = 0; i < currentWord.length(); i++) {
 			hiddenWord += "_";
 		}
@@ -72,7 +74,7 @@ public class HangMan implements KeyListener {
 				inWord = true;
 			}
 		}
-		
+
 		hiddenWord = "";
 		for (int i = 0; i < hiddenWordArray.length; i++) {
 			hiddenWord += hiddenWordArray[i];
@@ -83,17 +85,20 @@ public class HangMan implements KeyListener {
 			lives--;
 		}
 		if (lives == 0) {
-			JOptionPane.showMessageDialog(null, "You ran out of lives! :O");
+			JOptionPane.showMessageDialog(null, "You ran out of lives! Game over.");
+			System.exit(0);
 		}
+		checkRoundOver();
 	}
 
 	public void checkRoundOver() {
 		if (hiddenWord.equals(currentWord)) {
-			currentWord = stack.pop();
-			lives = 10;
-			if (stack.size() == 0) {
+			System.out.println("hi");
+			lives = 5;
+			if (stack.isEmpty()) {
 				JOptionPane.showMessageDialog(null, "Congrats, you won!");
 			}
+			displayWordLine();
 		}
 	}
 
